@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic.list import ListView
 
-# Create your views here.
+from apps.exchange import models
+
+
+class StatisticListView(ListView):
+    model = models.Statistic
+    template_name = 'home/index.html'

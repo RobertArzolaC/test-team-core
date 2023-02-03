@@ -67,6 +67,14 @@ En este punto, la aplicación se ejecuta en `http://127.0.0.1:8000/`
 
 <br />
 
+> `Ejecutar pruebas`
+
+```bash
+$ python manage.py test
+```
+
+<br />
+
 ## ✨ TO-DO
 
 - [ ] Agregar Celery para manejar las tareas asíncronas

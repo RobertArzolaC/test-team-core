@@ -1157,7 +1157,7 @@
   "model": "admin.logentry",
   "pk": 36,
   "fields": {
-    "action_time": "2023-02-03T02:07:34.000Z",
+    "action_time": "2023-02-03T02:07:34Z",
     "user": [
       "admin"
     ],
@@ -5559,6 +5559,78 @@
     ],
     "object_id": "159",
     "object_repr": "Tether - 2023-02-03 03:22:04.300451+00:00",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 281,
+  "fields": {
+    "action_time": "2023-02-03T04:15:21.848Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "exchange",
+      "statistic"
+    ],
+    "object_id": "169",
+    "object_repr": "Tether - 2023-02-03 03:23:14.569868+00:00",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 282,
+  "fields": {
+    "action_time": "2023-02-03T04:15:21.859Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "exchange",
+      "statistic"
+    ],
+    "object_id": "168",
+    "object_repr": "Binance USD - 2023-02-03 03:23:09.433923+00:00",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 283,
+  "fields": {
+    "action_time": "2023-02-03T04:15:21.866Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "exchange",
+      "statistic"
+    ],
+    "object_id": "167",
+    "object_repr": "Ethereum - 2023-02-03 03:23:05.670996+00:00",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 284,
+  "fields": {
+    "action_time": "2023-02-03T04:15:21.874Z",
+    "user": [
+      "admin"
+    ],
+    "content_type": [
+      "exchange",
+      "statistic"
+    ],
+    "object_id": "166",
+    "object_repr": "USD Coin - 2023-02-03 03:22:54.530167+00:00",
     "action_flag": 3,
     "change_message": ""
   }

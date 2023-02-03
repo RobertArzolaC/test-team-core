@@ -1,4 +1,5 @@
 from django.views.generic import View
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
 from apps.exchange import models
@@ -7,7 +8,7 @@ from apps.core.scraper import CoinScraper
 
 class ScrapingByCoinView(View):
     def get(self, request, *args, **kwargs):
-        coin = models.Coin.objects.get(slug=kwargs['coin'])
+        coin = get_object_or_404(models.Coin, slug=kwargs['coin'])
         scraper = CoinScraper()
         data = scraper.extract_coin_data(coin.slug)
         models.Statistic.load_data(coin, data)
@@ -21,4 +22,4 @@ class ScrapingAllCoinsView(View):
         for coin in coins:
             data = scraper.extract_coin_data(coin.slug)
             models.Statistic.load_data(coin, data)
-        return HttpResponse('ok')
+            return HttpResponse('ok')

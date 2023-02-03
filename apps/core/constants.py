@@ -27,16 +27,16 @@ XPATH_NODES = [
 ]
 
 VALUES_LIST = [
-    'Bitcoin price',
-    'Price Change',
-    '24h Low / 24h High',
-    'Trading Volume',
-    'Volume / Market Cap',
-    'Market Dominance',
-    'Market Rank',
-    'Circulating Supply',
-    'Total Supply',
-    'Max Supply'
+    "price",
+    "price_change",
+    "low_high_24h",
+    "trading_volume_24h",
+    "market_cap",
+    "market_dominance",
+    "market_rank",
+    "circulating_supply",
+    "total_supply",
+    "max_supply"
 ]
 
 NOW_FORMAT = "Day: %d-%m-%Y Hour: %H:%M:%S"

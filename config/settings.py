@@ -30,6 +30,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize'
 ]
 
 THIRD_PARTY_APPS = [
@@ -38,6 +39,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'apps.core.apps.CoreConfig',
+    'apps.home.apps.HomeConfig',
     'apps.exchange.apps.ExchangeConfig',
 ]
 

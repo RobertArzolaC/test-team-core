@@ -20,12 +20,10 @@ class CoinScraper:
             if response.status_code == 200:
                 bitcoin_page = response.content.decode('utf-8')
                 parsed = html.fromstring(bitcoin_page)
-                now = datetime.now()
                 data = dict()
                 for index, value in enumerate(constants.VALUES_LIST):
                     tag = parsed.xpath(constants.XPATH_NODES[index])
                     data[value] = tag[0]
-                data['Obtained'] = now.strftime(constants.NOW_FORMAT)
                 return data
             else:
                 raise ValueError(f'Error: {response.status_code}')

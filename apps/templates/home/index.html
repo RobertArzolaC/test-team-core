@@ -1,11 +1,13 @@
 {% extends "layouts/base.html" %}
 {% load static %}
+{% load humanize %}
 {% block content %}
-  <div class="container mt-5">
-      <h1 class="text-center">Listado de Criptomonedas</h1>
-      <table class="table table-bordered table-striped">
+<div class="mx-5 mt-5">
+    <h1 class="text-center">Listado de Criptomonedas</h1>
+    <table class="table table-bordered table-striped mt-5">
       <thead>
-          <tr>
+        <tr>
+          <th>Market Rank</th>
           <th>Criptocurrency</th>
           <th>Price</th>
           <th>Price Change</th>
@@ -13,48 +15,127 @@
           <th>Trading Volume</th>
           <th>Market Cap</th>
           <th>Market Dominance</th>
-          <th>Market Rank</th>
           <th>Circulating Supply</th>
           <th>Total Supply</th>
           <th>Max Supply</th>
-          <th>Obtained</th>
+          <th>Last Updated</th>
           <th>Actions</th>
-          </tr>
+        </tr>
       </thead>
       <tbody>
+        {% for crypto in page_obj %}
           <tr>
-          <td>Bitcoin</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td><button class="btn btn-primary btn-sm">Actualizar</button></td>
+            <td>
+              {% if crypto.latest_statistic.market_rank %}
+                {{ crypto.latest_statistic.market_rank }}
+              {% else %}
+                #
+              {% endif %}
+            </td>
+            <td>{{ crypto.name }}</td>
+            <td>{{ crypto.latest_statistic.price }}</td>
+            <td>{{ crypto.latest_statistic.price_change }}</td>
+            <td>{{ crypto.latest_statistic.low_high_24h }}</td>
+            <td>{{ crypto.latest_statistic.trading_volume_24h }}</td>
+            <td>{{ crypto.latest_statistic.market_cap }}</td>
+            <td>{{ crypto.latest_statistic.market_dominance }}</td>
+            <td>{{ crypto.latest_statistic.circulating_supply }}</td>
+            <td>{{ crypto.latest_statistic.total_supply }}</td>
+            <td>{{ crypto.latest_statistic.max_supply }}</td>
+            <td>{{ crypto.latest_statistic.updated_at|naturaltime }}</td>
+            <td>
+              <button
+                id="{{ crypto.slug }}"
+                class="update-button btn btn-primary"
+              >
+                Actualizar
+              </button>
+            </td>
           </tr>
+        {% empty %}
           <tr>
-          <td>Bitcoin</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td>$50,000</td>
-          <td><button class="btn btn-primary btn-sm">Actualizar</button></td>
+            <td colspan="13" class="text-center">No hay registros</td>
           </tr>
-          <!-- Agregar más filas para más criptomonedas -->
+        {% endfor %}
       </tbody>
-      </table>
-      <button class="btn btn-danger btn-sm mt-3 mb-5">Actualizar Todas</button>
-  </div>
+    </table>
+    <div class="d-flex align-items-center justify-content-between">
+      <button id="update_all_button" class="btn btn-danger">
+        Actualizar todas
+      </button>
+      <div class="d-flex justify-content-end align-items-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+              </li>
+            {% endif %}
+      
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <li class="page-item active">
+                  <span class="page-link">{{ num }} <span class="sr-only">(current)</span></span>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+      
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <span class="page-link">Next</span>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+</div>
 {% endblock content %}
+{% block javascripts %}
+<script>
+  $(document).ready(function() {
+    $('#update_all_button').click(function() {
+      var $updateAllButton = $(this);
+      $updateAllButton.text("Procesando...");
+      $.ajax({
+        url: '/core/scraping-all-coins/',
+        type: 'GET',
+        success: function(data) {
+          location.reload();
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
+    });
+
+    $('.update-button').click(function() {
+      var slug = $(this).attr('id');
+      var $updateButton = $(this);
+      $updateButton.text("Cargando...");
+      $.ajax({
+        url: 'core/scraping-by-coin/' + slug,
+        type: 'GET',
+        success: function(data) {
+          location.reload();
+        },
+        error: function(error) {
+          console.error(error);
+        }
+      });
+    });
+  });
+</script>
+{% endblock javascripts %}
